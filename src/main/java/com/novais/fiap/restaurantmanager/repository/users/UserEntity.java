@@ -13,14 +13,20 @@ import java.util.Date;
 public class UserEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String name;
+    @Column(unique = true, nullable = false)
     private String email;
+    @Column(nullable = false)
     private String login;
-    private String salt;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private Date lastModified;
     private String address;
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole role;
 }

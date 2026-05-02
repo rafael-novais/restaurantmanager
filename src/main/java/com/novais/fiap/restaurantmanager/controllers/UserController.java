@@ -1,8 +1,10 @@
 package com.novais.fiap.restaurantmanager.controllers;
 
+import com.novais.fiap.restaurantmanager.controllers.requests.RegisterRequest;
 import com.novais.fiap.restaurantmanager.services.users.UserService;
 import com.novais.fiap.restaurantmanager.services.users.dto.UserViewDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,6 +17,12 @@ public class UserController {
     @GetMapping("/{id}")
     public UserViewDTO getUser(@PathVariable Long id) {
         return service.findUserById(id);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+        service.register(request);
+        return ResponseEntity.ok("User criado com sucesso");
     }
 
 }

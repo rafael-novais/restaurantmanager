@@ -1,7 +1,7 @@
 package com.novais.fiap.restaurantmanager.controllers;
 
 import com.novais.fiap.restaurantmanager.controllers.requests.LoginRequest;
-import com.novais.fiap.restaurantmanager.services.users.config.JwtService;
+import com.novais.fiap.restaurantmanager.config.security.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;

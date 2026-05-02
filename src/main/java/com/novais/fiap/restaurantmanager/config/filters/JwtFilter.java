@@ -1,6 +1,6 @@
-package com.novais.fiap.restaurantmanager.services.filters;
+package com.novais.fiap.restaurantmanager.config.filters;
 
-import com.novais.fiap.restaurantmanager.services.users.config.JwtService;
+import com.novais.fiap.restaurantmanager.config.security.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,7 +33,11 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
 
-        if (authHeader == null || !authHeader.startsWith("Bearer ") || request.getServletPath().startsWith("/auth")) {
+        if (authHeader == null ||
+                !authHeader.startsWith("Bearer ") ||
+                request.getServletPath().startsWith("/auth") ||
+                request.getServletPath().equals("/users/register")
+        ) {
             chain.doFilter(request, response);
             return;
         }

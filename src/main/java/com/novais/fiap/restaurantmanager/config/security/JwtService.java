@@ -1,4 +1,4 @@
-package com.novais.fiap.restaurantmanager.services.users.config;
+package com.novais.fiap.restaurantmanager.config.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
