@@ -1,5 +1,3 @@
-http://localhost:8080/swagger-ui/index.html
-
 🍽️ Restaurant Manager API
 
 API backend desenvolvida em Java com foco em organização em camadas, boas práticas de arquitetura e separação de responsabilidades.
@@ -37,32 +35,37 @@ src/main/java/com/novais/fiap/restaurantmanager
 🔄 Futuramente, a estrutura poderá evoluir para um modelo baseado em arquitetura hexagonal (ports & adapters).
 
 🚀 Tecnologias utilizadas
-Java 17+
-Spring Boot
-Spring Web
-Spring Data JPA
-Maven
-Docker (opcional)
+- Java 21
+- Spring Boot
+- Spring Web
+- Spring Data JPA
+- Spring security
+- Maven
+- Docker
+- Swagger
+
 ⚙️ Como executar o projeto
+
 🔹 Pré-requisitos
-Java 17+
-Maven instalado
-Docker (opcional)
+Java 21  (opcional)
+Maven instalado  (opcional)
+Docker
+
 🔹 Rodando localmente
 # Clonar o repositório
-git clone https://github.com/seu-usuario/restaurant-manager.git
+git clone https://github.com/rafael-novais/restaurantmanager.git
 
 # Entrar na pasta
-cd restaurant-manager
+cd restaurantmanager
 
 # Buildar o projeto
-mvn clean install
+mvn clean install (opcional)
 
 # Rodar aplicação
-mvn spring-boot:run
+mvn spring-boot:run (opcional)
 
 🐳 Rodando com Docker
-docker-compose up --build
+docker-compose up --build (recomendado)
 
 🔗 Endpoints documentados via swagger e também na coleção postman na raiz do projeto se preferir
 * http://localhost:8080/swagger-ui/index.html
@@ -81,10 +84,7 @@ GET /v1/users/{id} → retorna um usuário
 🎯 Próximos passos
 
  * Evoluir arquitetura para modelo hexagonal
-
- * Implementar autenticação e autorização
-
- * Melhorar cobertura de testes
+ * Implementar cobertura de testes
 
 Adicionar documentação com Swagger
 
