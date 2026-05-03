@@ -3,6 +3,7 @@ package com.novais.fiap.restaurantmanager.services.users;
 
 import com.novais.fiap.restaurantmanager.config.security.AuthService;
 import com.novais.fiap.restaurantmanager.controllers.requests.RegisterRequest;
+import com.novais.fiap.restaurantmanager.exceptions.ResourceNotFoundException;
 import com.novais.fiap.restaurantmanager.mappers.UserMapper;
 import com.novais.fiap.restaurantmanager.repository.users.UserEntity;
 import com.novais.fiap.restaurantmanager.repository.users.UserRepository;
@@ -23,7 +24,9 @@ public class UserService {
     private AuthService authService;
 
     public UserViewDTO findUserById(Long id) {
-        return userMapper.toUserViewDTO(userRepository.findById(id).orElse(null));
+        return userMapper.toUserViewDTO(
+                userRepository.findById(id)
+                        .orElseThrow(() -> new ResourceNotFoundException(String.format("Usuário %s não encontrado!", id))));
     }
 
     public void register(RegisterRequest request) {
