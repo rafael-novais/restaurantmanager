@@ -1,13 +1,16 @@
 package com.novais.fiap.restaurantmanager.exceptions.handlers;
 
+import com.novais.fiap.restaurantmanager.exceptions.InsertToDatabaseException;
 import com.novais.fiap.restaurantmanager.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.net.URI;
+import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -34,4 +37,39 @@ public class GlobalExceptionHandler {
 
         return problem;
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ProblemDetail handleValidation(MethodArgumentNotValidException ex) {
+        ProblemDetail problem = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+
+        problem.setType(URI.create("input-field-validation"));
+        problem.setTitle("Erro de validação");
+
+        problem.setProperty("errors",
+                ex.getBindingResult()
+                        .getFieldErrors()
+                        .stream()
+                        .map(e -> Map.of(
+                                "field", e.getField(),
+                                "message", e.getDefaultMessage()
+                        ))
+                        .toList()
+        );
+
+        problem.setDetail(ex.getMessage());
+        return problem;
+    }
+
+    @ExceptionHandler(InsertToDatabaseException.class)
+    public ProblemDetail handleDataBaseEx(InsertToDatabaseException ex) {
+        ProblemDetail problem = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+
+        problem.setType(URI.create("insert-db-error"));
+        problem.setTitle("Problema para salvar no banco de dados");
+        problem.setDetail(ex.getMessage());
+
+        return problem;
+    }
+
+
 }

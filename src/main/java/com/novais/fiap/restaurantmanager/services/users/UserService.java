@@ -3,6 +3,7 @@ package com.novais.fiap.restaurantmanager.services.users;
 
 import com.novais.fiap.restaurantmanager.config.security.AuthService;
 import com.novais.fiap.restaurantmanager.controllers.requests.RegisterRequest;
+import com.novais.fiap.restaurantmanager.exceptions.InsertToDatabaseException;
 import com.novais.fiap.restaurantmanager.exceptions.ResourceNotFoundException;
 import com.novais.fiap.restaurantmanager.mappers.UserMapper;
 import com.novais.fiap.restaurantmanager.repository.users.UserEntity;
@@ -41,6 +42,11 @@ public class UserService {
         user.setName(request.getName());
         user.setLastModified(new Date());
 
-        userRepository.save(user);
+        try {
+            userRepository.save(user);
+        }catch (Exception ex) {
+            throw new InsertToDatabaseException(ex.getMessage());
+        }
+
     }
 }

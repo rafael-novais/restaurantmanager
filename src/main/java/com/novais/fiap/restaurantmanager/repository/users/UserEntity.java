@@ -8,7 +8,10 @@ import lombok.Setter;
 import java.util.Date;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_user_email", columnNames = "email")
+        })
 @Getter @Setter
 public class UserEntity {
 
