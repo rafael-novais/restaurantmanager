@@ -36,7 +36,9 @@ public class JwtFilter extends OncePerRequestFilter {
         if (authHeader == null ||
                 !authHeader.startsWith("Bearer ") ||
                 request.getServletPath().startsWith("/auth") ||
-                request.getServletPath().equals("/users/register")
+                request.getServletPath().equals("/users/register") ||
+                request.getRequestURI().startsWith("/swagger") ||
+                request.getRequestURI().startsWith("/v3/api-docs")
         ) {
             chain.doFilter(request, response);
             return;
