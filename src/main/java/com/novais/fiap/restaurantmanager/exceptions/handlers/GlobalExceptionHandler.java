@@ -57,7 +57,7 @@ public class GlobalExceptionHandler {
                         .toList()
         );
 
-        problem.setDetail(ex.getMessage());
+        problem.setDetail("Um ou mais campos inválidos, checar erros");
         return problem;
     }
 
@@ -78,7 +78,7 @@ public class GlobalExceptionHandler {
 
         problem.setType(URI.create("invalid-credentials"));
         problem.setTitle("Credenciais inválidas");
-        problem.setDetail(ex.getMessage());
+        problem.setDetail("Usuário ou senha errados!");
 
         return problem;
     }
