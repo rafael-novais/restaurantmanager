@@ -45,8 +45,13 @@ public class UserController {
 
     @PutMapping("/update")
     public ResponseEntity<?> update(@Valid @RequestBody UpdateUserRequest request, Authentication authentication) {
-
         service.updateUser(authentication.getName(), request);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/remove/{id}")
+    public ResponseEntity<?> remove(@PathVariable Long id) {
+        service.remove(id);
         return ResponseEntity.ok().build();
     }
 

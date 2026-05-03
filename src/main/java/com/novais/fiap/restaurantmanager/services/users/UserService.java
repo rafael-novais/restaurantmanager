@@ -64,6 +64,15 @@ public class UserService {
 
     }
 
+    public void remove(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new ResourceNotFoundException(
+                    "Usuário %s não encontrado!".formatted(id)
+            );
+        }
+        userRepository.deleteById(id);
+    }
+
     public void changePassword(String email, ChangePasswordRequest request) {
         UserEntity user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("Usuário %s não encontrado!", email)));
