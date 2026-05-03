@@ -69,33 +69,18 @@ docker-compose up --build (recomendado)
 
 🔗 Endpoints documentados via swagger e também na coleção postman na raiz do projeto se preferir
 * http://localhost:8080/swagger-ui/index.html
-
-Exemplo:
-
-👤 Usuários
-GET /v1/users/{id} → retorna um usuário
-
-⚠️ A API ainda está em desenvolvimento, novos endpoints serão adicionados.
-
-📊 Status do projeto
-
-🚧 Em desenvolvimento
+* /restaurantmanager/restaurantmanager.postman_collection
 
 🎯 Próximos passos
 
  * Evoluir arquitetura para modelo hexagonal
  * Implementar cobertura de testes
 
-Adicionar documentação com Swagger
-
 📄 Licença
-
-Este projeto está sob a licença MIT.
+ - Este projeto está sob a licença MIT.
 
 👨‍💻 Autor
-
-Desenvolvido por Rafael Amorim
+ - Desenvolvido por Rafael Amorim
 
 💡 Observações
-
-Este projeto tem caráter educacional e foi desenvolvido com foco em aprendizado de arquitetura e boas práticas em aplicações Java.
+ - Este projeto tem caráter educacional e foi desenvolvido com foco em aprendizado de arquitetura e boas práticas em aplicações Java.
