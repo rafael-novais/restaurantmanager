@@ -1,6 +1,7 @@
 package com.novais.fiap.restaurantmanager.exceptions.handlers;
 
 import com.novais.fiap.restaurantmanager.exceptions.InsertToDatabaseException;
+import com.novais.fiap.restaurantmanager.exceptions.InvalidCredentialsException;
 import com.novais.fiap.restaurantmanager.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -66,6 +67,17 @@ public class GlobalExceptionHandler {
 
         problem.setType(URI.create("insert-db-error"));
         problem.setTitle("Problema para salvar no banco de dados");
+        problem.setDetail(ex.getMessage());
+
+        return problem;
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ProblemDetail handleInvalidCredentials(InvalidCredentialsException ex) {
+        ProblemDetail problem = ProblemDetail.forStatus(HttpStatus.FORBIDDEN);
+
+        problem.setType(URI.create("invalid-credentials"));
+        problem.setTitle("Credenciais inválidas");
         problem.setDetail(ex.getMessage());
 
         return problem;

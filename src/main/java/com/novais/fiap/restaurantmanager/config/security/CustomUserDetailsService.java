@@ -1,5 +1,6 @@
 package com.novais.fiap.restaurantmanager.config.security;
 
+import com.novais.fiap.restaurantmanager.exceptions.InvalidCredentialsException;
 import com.novais.fiap.restaurantmanager.repository.users.UserEntity;
 import com.novais.fiap.restaurantmanager.repository.users.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,7 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) {
         UserEntity user = repository.findByEmail(email)
-                .orElseThrow();
+                .orElseThrow(() -> new InvalidCredentialsException("Credenciais Inválidas"));
 
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
@@ -29,4 +30,5 @@ public class CustomUserDetailsService implements UserDetailsService {
                 List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()))
         );
     }
+
 }

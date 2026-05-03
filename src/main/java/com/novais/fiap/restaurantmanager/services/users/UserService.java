@@ -2,7 +2,9 @@ package com.novais.fiap.restaurantmanager.services.users;
 
 
 import com.novais.fiap.restaurantmanager.config.security.AuthService;
+import com.novais.fiap.restaurantmanager.controllers.requests.ChangePasswordRequest;
 import com.novais.fiap.restaurantmanager.controllers.requests.RegisterRequest;
+import com.novais.fiap.restaurantmanager.controllers.requests.UpdateUserRequest;
 import com.novais.fiap.restaurantmanager.exceptions.InsertToDatabaseException;
 import com.novais.fiap.restaurantmanager.exceptions.ResourceNotFoundException;
 import com.novais.fiap.restaurantmanager.mappers.UserMapper;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -28,6 +31,17 @@ public class UserService {
         return userMapper.toUserViewDTO(
                 userRepository.findById(id)
                         .orElseThrow(() -> new ResourceNotFoundException(String.format("Usuário %s não encontrado!", id))));
+    }
+
+    public List<UserViewDTO> findUserByName(String name) {
+        return userMapper.toUserViewDTOList(
+                userRepository.findByName(name)
+                        .orElseThrow(() -> new ResourceNotFoundException(String.format("Nenhum usuário %s encontrado!", name))));
+    }
+
+    public UserEntity findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                        .orElseThrow(() -> new ResourceNotFoundException(String.format("Nenhum usuário %s encontrado!", email)));
     }
 
     public void register(RegisterRequest request) {
@@ -48,5 +62,35 @@ public class UserService {
             throw new InsertToDatabaseException(ex.getMessage());
         }
 
+    }
+
+    public void changePassword(String email, ChangePasswordRequest request) {
+        UserEntity user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Usuário %s não encontrado!", email)));
+
+        user.setPassword(authService.encode(user, request));
+        user.setLastModified(new Date());
+        userRepository.save(user);
+    }
+
+    public void updateUser(String email, UpdateUserRequest request) {
+        UserEntity user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Usuário %s não encontrado!", email)));
+
+        user.setEmail(isStringValid(request.getEmail()) ? request.getEmail() : email);
+        user.setLogin(isStringValid(request.getLogin()) ? request.getLogin() : user.getLogin());
+        user.setRole(request.getRole() != null ? request.getRole() : user.getRole());
+        user.setAddress(isStringValid(request.getAddress()) ? request.getAddress() : user.getAddress());
+        user.setName(isStringValid(request.getName()) ? request.getName() : user.getName());
+        user.setLastModified(new Date());
+        try {
+            userRepository.save(user);
+        }catch (Exception ex) {
+            throw new InsertToDatabaseException(ex.getMessage());
+        }
+    }
+
+    private boolean isStringValid(String s) {
+        return s != null && !s.trim().isBlank() && !s.trim().isEmpty();
     }
 }
