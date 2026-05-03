@@ -1,10 +1,14 @@
 package com.novais.fiap.restaurantmanager.config.filters;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.novais.fiap.restaurantmanager.config.security.JwtService;
+import com.novais.fiap.restaurantmanager.exceptions.InvalidCredentialsException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 
 @Component
@@ -36,14 +41,26 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
 
-        if (authHeader == null ||
-                !authHeader.startsWith("Bearer ") ||
-                request.getServletPath().startsWith("/auth") ||
-                request.getServletPath().equals("/users/register") ||
+        if (request.getServletPath().startsWith("/v1/auth") ||
+                request.getServletPath().equals("/v1/users/register") ||
                 request.getRequestURI().startsWith("/swagger") ||
-                request.getRequestURI().startsWith("/v3/api-docs")
+                request.getRequestURI().startsWith("/v3/api-docs") ||
+                request.getServletPath().equals("/v1/auth/login")
         ) {
             chain.doFilter(request, response);
+            return;
+        }
+
+        if(authHeader == null || !authHeader.startsWith("Bearer ")){
+            ProblemDetail problem = ProblemDetail.forStatus(HttpStatus.UNAUTHORIZED);
+            problem.setTitle("Token invalido");
+            problem.setDetail("Token ausente ou mal formatado");
+            problem.setType(URI.create("/errors/invalid-token"));
+
+            response.setStatus(401);
+            response.setContentType("application/json");
+
+            response.getWriter().write(new ObjectMapper().writeValueAsString(problem));
             return;
         }
 

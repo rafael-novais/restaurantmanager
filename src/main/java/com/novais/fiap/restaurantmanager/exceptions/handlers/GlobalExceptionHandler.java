@@ -78,7 +78,7 @@ public class GlobalExceptionHandler {
 
         problem.setType(URI.create("invalid-credentials"));
         problem.setTitle("Credenciais inválidas");
-        problem.setDetail("Usuário ou senha errados!");
+        problem.setDetail(ex.getMessage());
 
         return problem;
     }
