@@ -1,3 +1,101 @@
 http://localhost:8080/swagger-ui/index.html
 
-api possui versionamento via URL, permitindo altearção
+🍽️ Restaurant Manager API
+
+API backend desenvolvida em Java com foco em organização em camadas, boas práticas de arquitetura e separação de responsabilidades.
+
+📌 Sobre o projeto
+
+O Restaurant Manager é uma aplicação backend responsável por gerenciar operações relacionadas a um sistema de restaurante, como usuários, pedidos e demais entidades do domínio.
+
+O projeto foi desenvolvido com foco em:
+
+Arquitetura limpa e organizada
+Separação clara de responsabilidades
+Facilidade de manutenção e evolução
+Boas práticas com Spring Boot
+Versionamento via URL, permitindo alteração
+
+🧱 Arquitetura
+
+O projeto segue o padrão de arquitetura em camadas (Layered Architecture):
+
+Controller → entrada da aplicação (HTTP / REST)
+Service → camada de aplicação
+Repository → acesso a dados e persistencia
+Domain → dominios e regras de negócio
+
+Estrutura atual:
+
+src/main/java/com/novais/fiap/restaurantmanager
+
+├── controllers
+├── services
+├── repository
+└── domain
+
+🔄 Futuramente, a estrutura poderá evoluir para um modelo baseado em arquitetura hexagonal (ports & adapters).
+
+🚀 Tecnologias utilizadas
+Java 17+
+Spring Boot
+Spring Web
+Spring Data JPA
+Maven
+Docker (opcional)
+⚙️ Como executar o projeto
+🔹 Pré-requisitos
+Java 17+
+Maven instalado
+Docker (opcional)
+🔹 Rodando localmente
+# Clonar o repositório
+git clone https://github.com/seu-usuario/restaurant-manager.git
+
+# Entrar na pasta
+cd restaurant-manager
+
+# Buildar o projeto
+mvn clean install
+
+# Rodar aplicação
+mvn spring-boot:run
+
+🐳 Rodando com Docker
+docker-compose up --build
+
+🔗 Endpoints documentados via swagger e também na coleção postman na raiz do projeto se preferir
+* http://localhost:8080/swagger-ui/index.html
+
+Exemplo:
+
+👤 Usuários
+GET /v1/users/{id} → retorna um usuário
+
+⚠️ A API ainda está em desenvolvimento, novos endpoints serão adicionados.
+
+📊 Status do projeto
+
+🚧 Em desenvolvimento
+
+🎯 Próximos passos
+
+ * Evoluir arquitetura para modelo hexagonal
+
+ * Implementar autenticação e autorização
+
+ * Melhorar cobertura de testes
+
+Adicionar documentação com Swagger
+
+📄 Licença
+
+Este projeto está sob a licença MIT.
+
+👨‍💻 Autor
+
+Desenvolvido por Rafael Amorim
+
+💡 Observações
+
+Este projeto tem caráter educacional e foi desenvolvido com foco em aprendizado de arquitetura e boas práticas em aplicações Java.
