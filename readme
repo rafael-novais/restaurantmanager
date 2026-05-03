@@ -52,20 +52,22 @@ Maven instalado  (opcional)
 Docker
 
 🔹 Rodando localmente
+
 # Clonar o repositório
 git clone https://github.com/rafael-novais/restaurantmanager.git
 
 # Entrar na pasta
 cd restaurantmanager
 
+🐳 Rodando com Docker  (recomendado)
+docker-compose up --build (recomendado)
+
+Rodando com Java manualmente (opcional)
 # Buildar o projeto
 mvn clean install (opcional)
 
 # Rodar aplicação
 mvn spring-boot:run (opcional)
-
-🐳 Rodando com Docker
-docker-compose up --build (recomendado)
 
 🔗 Endpoints documentados via swagger e também na coleção postman na raiz do projeto se preferir
 * http://localhost:8080/swagger-ui/index.html
